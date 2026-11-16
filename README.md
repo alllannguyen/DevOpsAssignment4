@@ -27,11 +27,12 @@ Separate private S3 bucket → resume file storage
    artifacts:
      files:
        - index.html
+       - resume.pdf
        - appspec.yml
        - scripts/**/*
    ```
 
-4. Create a CodeDeploy EC2 application and deployment group targeting the instance tag. `appspec.yml` copies the page to `/var/www/html`; `scripts/start-server.sh` starts Apache.
+4. Create a CodeDeploy EC2 application and deployment group targeting the instance tag. `appspec.yml` copies the page and PDF to `/var/www/html`; `scripts/start-server.sh` starts Apache.
 5. Create a CodePipeline pipeline with GitHub as the source, your CodeBuild project as the build stage, and the CodeDeploy application and deployment group as the deploy stage. Wait for the pipeline to succeed, then open the EC2 public URL.
 6. Optionally upload a PDF to the private resume bucket:
 
@@ -39,11 +40,11 @@ Separate private S3 bucket → resume file storage
    aws s3 cp /path/to/resume.pdf s3://resume-website-resumebucket-pjewhrhvdquj/resume.pdf --profile new-profile-name
    ```
 
-   Uploading the PDF stores it privately; it does not update the website.
+   Uploading the PDF stores it privately; update `resume.pdf` in the repository and push it to update the website.
 
 ## Maintenance and demonstration
 
-Edit `index.html`, commit and push to the configured branch. In the CodePipeline console, show the new revision progressing through Source, Build and Deploy, then refresh the website to show the change. Record a walkthrough, explain completed and omitted features, and demonstrate this process. Upload the recording and submit its URL.
+Edit `index.html` or replace `resume.pdf`, commit and push to the configured branch. In the CodePipeline console, show the new revision progressing through Source, Build and Deploy, then refresh the website to show the change. Record a walkthrough, explain completed and omitted features, and demonstrate this process. Upload the recording and submit its URL.
 
 Planned features: GitHub change detection, packaging, EC2 deployment, private resume storage and documentation. Automated tests and custom monitoring/alarms are omitted. AWS services may generate standard operational logs.
 
