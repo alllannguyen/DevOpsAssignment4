@@ -56,8 +56,3 @@ Planned features: GitHub change detection, packaging, EC2 deployment, private re
 - **Website unavailable:** Check the instance public IP, subnet routing, Apache, and port 80 security group.
 - **Authentication errors:** Run `aws sts get-caller-identity --profile new-profile-name` to check the account and renew the login if needed.
 
-## Cleanup
-
-When finished, save anything needed from the S3 buckets, then remove the pipeline, CodeBuild project, CodeDeploy application, EC2 instance, buckets, unused IAM roles and connection. Empty buckets, including any versions, before deleting them.
-
-An earlier setup created a CloudFormation stack named `resume-website`. Removing its template from this repository does not delete the stack or its resources. Deleting the stack removes its managed resources once its buckets are emptied, so keep it until you are ready to clean up or replace them.
